@@ -1,7 +1,9 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "sourceMap": false
+    "sourceMap": false,
+    "resolveJsonModule": true,
+    "esModuleInterop": true
   },
   "exclude": [
     "spec",

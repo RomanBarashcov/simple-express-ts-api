@@ -14,7 +14,7 @@ export class UserService implements IUserService {
     private userDao: IUserDao; 
 
     constructor(private _uD: IUserDao) {
-        this.userDao = _uD;
+        this.userDao = this._uD;
     }
 
     public async getAll(): Promise<any> {

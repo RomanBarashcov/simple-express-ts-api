@@ -9,15 +9,7 @@ import 'express-async-errors';
 import BaseRouter from './routes';
 import logger from '@shared/Logger';
 
-
-// Init express
 const app = express();
-
-
-
-/************************************************************************************
- *                              Set basic express settings
- ***********************************************************************************/
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
