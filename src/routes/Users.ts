@@ -2,7 +2,7 @@ import { Request, Response, Router } from 'express';
 import { BAD_REQUEST, CREATED, OK } from 'http-status-codes';
 import { ParamsDictionary } from 'express-serve-static-core';
 
-import UserDao from '@daos/User/UserDao.mock';
+import UserDao from '@daos/User/UserDao';
 import { paramMissingError } from '@shared/constants';
 import { IUserService , UserService } from '../service/user.service';
 
@@ -13,6 +13,30 @@ const userService: IUserService = new UserService(userDao);
 router.get('/all', async (req: Request, res: Response) => {
 
     const users = await userService.getAll();
+    return res.status(OK).json({users});
+
+});
+
+router.get('/:id', async (req: Request, res: Response) => {
+
+    const { id } = req.params as ParamsDictionary;
+    const users = await userService.getById(parseInt(id, 10));
+    return res.status(OK).json({users});
+
+});
+
+router.get('/find/by/email/:email', async (req: Request, res: Response) => {
+
+    const { email } = req.params as ParamsDictionary;
+    const users = await userService.getByEmail(email);
+    return res.status(OK).json({users});
+
+});
+
+router.get('/find/by/role/:id', async (req: Request, res: Response) => {
+
+    const { id } = req.params as ParamsDictionary;
+    const users = await userService.getByRoleId(parseInt(id, 10));
     return res.status(OK).json({users});
 
 });

@@ -6,7 +6,8 @@
     "lint": "tslint --project \"tsconfig.json\"",
     "start": "node -r module-alias/register ./dist",
     "start:dev": "nodemon --config nodemon.json",
-    "test": "nodemon --config nodemon.test.json"
+    "test": "nodemon --config nodemon.test.json",
+    "hard:reset:db": "sequelize db:drop && sequelize db:create && sequelize db:migrate && sequelize db:seed:all"
   },
   "_moduleAliases": {
     "@daos": "dist/daos",

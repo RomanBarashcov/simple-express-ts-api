@@ -1,21 +1,20 @@
 
-import { Sequelize, Model, DataTypes, BuildOptions } from 'sequelize';
-import * as sequelize from './index';
-import * as Role from './role';
+import { Model, DataTypes } from 'sequelize';
+import { sequelize } from './index';
+import { Role } from './role';
 
-class User extends Model {
+export class User extends Model {
   public id!: number;
   public name!: string;
   public email!: string;
   public roleId!: number;
+
+  public readonly createdAt!: Date;
+  public readonly updatedAt!: Date;
+
 }
 
 User.init({
-  id: {
-    type: DataTypes.INTEGER.UNSIGNED,
-    autoIncrement: true,
-    primaryKey: true,
-  },
   name: {
     type: new DataTypes.STRING(128),
     allowNull: false,
@@ -23,16 +22,12 @@ User.init({
   email: {
     type: new DataTypes.STRING(128),
     allowNull: false,
-  },
-  roleId: {
-    type: new DataTypes.STRING(128),
-    allowNull: false,
-  },
+  }
 }, {
-  tableName: 'Users',
-  sequelize: sequelize.default.sequelize,
+  sequelize,
+  modelName: 'user',
 });
 
-User.belongsTo(Role.default, {targetKey: 'id'});
+User.belongsTo(Role, {foreignKey: 'roleId'});
 
-export default User;
+User.sync({ force: false }).then(() => console.log("User table created"));
