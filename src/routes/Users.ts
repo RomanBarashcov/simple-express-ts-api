@@ -20,7 +20,7 @@ router.get('/all', async (req: Request, res: Response) => {
 router.get('/:id', async (req: Request, res: Response) => {
 
     const { id } = req.params as ParamsDictionary;
-    const users = await userService.getById(parseInt(id, 10));
+    const users = await userService.getById(Number(id));
     return res.status(OK).json({users});
 
 });
@@ -36,7 +36,7 @@ router.get('/find/by/email/:email', async (req: Request, res: Response) => {
 router.get('/find/by/role/:id', async (req: Request, res: Response) => {
 
     const { id } = req.params as ParamsDictionary;
-    const users = await userService.getByRoleId(parseInt(id, 10));
+    const users = await userService.getByRoleId(Number(id));
     return res.status(OK).json({users});
 
 });
@@ -52,8 +52,8 @@ router.post('/add', async (req: Request, res: Response) => {
         });
     }
 
-    await userService.createUser(user);
-    return res.status(CREATED).end();
+    let result = await userService.createUser(user);
+    return res.status(CREATED).json({user: result});
 
 });
 
@@ -68,9 +68,9 @@ router.put('/update', async (req: Request, res: Response) => {
     }
 
     user.id = Number(user.id);
-    await userService.updateUser(user);
+    let result = await userService.updateUser(user);
 
-    return res.status(OK).end();
+    return res.status(OK).json({user: result});
 
 });
 
