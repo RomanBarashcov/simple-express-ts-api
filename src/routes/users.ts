@@ -20,8 +20,8 @@ router.get('/all', async (req: Request, res: Response) => {
 router.get('/:id', async (req: Request, res: Response) => {
 
     const { id } = req.params as ParamsDictionary;
-    const users = await userService.getById(Number(id));
-    return res.status(OK).json({users});
+    const user = await userService.getById(Number(id));
+    return res.status(OK).json({user});
 
 });
 

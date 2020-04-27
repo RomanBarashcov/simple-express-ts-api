@@ -19,31 +19,73 @@ export class UserService implements IUserService {
     }
 
     public async getAll(): Promise<any> {
-        return await this.userDao.getAll();
+        try {
+
+            return await this.userDao.getAll();
+
+        } catch (err) {
+            throw err;
+        }
     };
 
     public async getByRoleId(id: number): Promise<any> {
-        return await this.userDao.getAllByRoleId(id);
+        try {
+
+            return await this.userDao.getAllByRoleId(id);
+
+        } catch (err) {
+            throw err;
+        }
     }
 
     public async getById(id: number): Promise<any> {
-        return await this.userDao.getOneById(id);
+        try {
+
+            return await this.userDao.getOneById(id);
+
+        } catch (err) {
+            throw err;
+        }
     };
 
     public async getByEmail(email: string): Promise<any> {
-       return await this.userDao.getOneByEmail(email);
+        try {
+
+            return await this.userDao.getOneByEmail(email);
+
+        } catch (err) {
+            throw err;
+        }
     };
 
     public async createUser(user: any): Promise<any> {
-        return await this.userDao.add(user);
+        try {
+
+            return await this.userDao.add(user);
+
+        } catch (err) {
+            throw err;
+        }
     };
 
     public async updateUser(user: any): Promise<any> {
-        return await this.userDao.update(user);
+        try {
+
+            return await this.userDao.update(user);
+
+        } catch (err) {
+            throw err;
+        }
     };
 
     public async deleteUser(id: number): Promise<any> {
-        return await this.userDao.delete(id);
+        try {
+
+            return await this.userDao.delete(id);
+
+        } catch (err) {
+            throw err;
+        }
     }
 
 

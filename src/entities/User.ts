@@ -14,12 +14,13 @@ class User implements IUser {
     public email: string;
     public roleId: number;
 
-    constructor(nameOrUser: string | IUser, email?: string, id?: number) {
+    constructor(nameOrUser: string | IUser, email?: string, id?: number, roleId?: number) {
         if (typeof nameOrUser === 'string') {
             this.name = nameOrUser;
             this.email = email || '';
             this.id = id || -1;
-\
+            this.roleId = roleId || -1;
+
         } else {
             this.name = nameOrUser.name;
             this.email = nameOrUser.email;

@@ -25,4 +25,4 @@ Role.init({
 
 //Role.hasMany(User, {foreignKey: 'roleId'});
 
-Role.sync({ force: false }).then(() => console.log("Role table created"));
+Role.sync({ force: false }).then(() => console.log("Role model synced"));
