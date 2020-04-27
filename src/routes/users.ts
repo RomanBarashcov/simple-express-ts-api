@@ -2,7 +2,7 @@ import { Request, Response, Router } from 'express';
 import { BAD_REQUEST, CREATED, OK } from 'http-status-codes';
 import { ParamsDictionary } from 'express-serve-static-core';
 
-import UserDao from '@daos/User/UserDao';
+import UserDao from '@daos/user/user.dao';
 import { paramMissingError } from '@shared/constants';
 import { IUserService , UserService } from '../service/user.service';
 

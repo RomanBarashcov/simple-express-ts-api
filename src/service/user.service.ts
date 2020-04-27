@@ -1,4 +1,4 @@
-import { IUserDao } from '../daos/User/UserDao';
+import { IUserDao } from '../daos/user/user.dao';
 
 export interface IUserService {
     getAll(): Promise<any>;

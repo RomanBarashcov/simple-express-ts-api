@@ -2,7 +2,7 @@ import jsonfile from 'jsonfile';
 
 export class MockDaoMock {
 
-    private readonly dbFilePath = 'src/daos/MockDb/MockDb.json';
+    private readonly dbFilePath = 'src/daos/mockDb/mock.db.json';
 
     protected openDb(): Promise<any> {
         return jsonfile.readFile(this.dbFilePath);

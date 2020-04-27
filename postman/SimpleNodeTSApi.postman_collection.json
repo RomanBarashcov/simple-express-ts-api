@@ -1,0 +1,148 @@
+{
+	"info": {
+		"_postman_id": "6bad29b3-8310-4b7a-92f4-dc1e0305075b",
+		"name": "SimpleNodeTSApi",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get All Users",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{simple-ts}}/api/users/all",
+					"host": [
+						"{{simple-ts}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User By Role",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{simple-ts}}/api/users/find/by/role/3",
+					"host": [
+						"{{simple-ts}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"find",
+						"by",
+						"role",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User By Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{simple-ts}}/api/users/3",
+					"host": [
+						"{{simple-ts}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User By Email",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{simple-ts}}/api/users/find/by/email/example-user@gmail.com",
+					"host": [
+						"{{simple-ts}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"find",
+						"by",
+						"email",
+						"example-user@gmail.com"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\n \t\"user\": {\n        \"name\": \"User2\",\n        \"email\": \"example-user@gmail.com\",\n        \"roleId\": 3\n \t}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{simple-ts}}/api/users/add",
+					"host": [
+						"{{simple-ts}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update User",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\n \t\"user\": {\n \t\t\"id\": 3,\n        \"name\": \"UserUserUser\",\n        \"email\": \"example-user7777777@gmail.com\",\n        \"roleId\": 3\n \t}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{simple-ts}}/api/users/update",
+					"host": [
+						"{{simple-ts}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"update"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
