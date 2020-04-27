@@ -6,8 +6,8 @@ export interface IUserDao {
     getOneById: (id: number) => Promise<IUser | null>;
     getAll: () => Promise<IUser[]>;
     getAllByRoleId: (id: number) => Promise<IUser[]>;
-    add: (user: IUser) => Promise<void>;
-    update: (user: IUser) => Promise<void>;
+    add: (user: IUser) => Promise<IUser>;
+    update: (user: IUser) => Promise<any>;
     delete: (id: number) => Promise<void>;
 }
 
@@ -83,9 +83,10 @@ class UserDao implements IUserDao {
      *
      * @param user
      */
-    public async add(user: IUser): Promise<void> {
-        // TODO
-        return {} as any;
+    public async add(user: IUser): Promise<IUser> {
+        
+        return await db.User.create(user);
+
     }
 
 
@@ -93,9 +94,10 @@ class UserDao implements IUserDao {
      *
      * @param user
      */
-    public async update(user: IUser): Promise<void> {
-        // TODO
-        return {} as any;
+    public async update(user: IUser): Promise<any> {
+
+        return await db.User.update(user, { where: { id: user.id }});
+
     }
 
 
@@ -103,9 +105,10 @@ class UserDao implements IUserDao {
      *
      * @param id
      */
-    public async delete(id: number): Promise<void> {
-        // TODO
-        return {} as any;
+    public async delete(id: number): Promise<any> {
+        
+        return await db.User.destroy({ where: { id:id } });
+
     }
 }
 
