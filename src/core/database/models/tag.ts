@@ -23,7 +23,6 @@ Tag.init({
   modelName: 'tag',
 });
 
-//Tag.belongsToMany(Image, { through: ImageTags, foreignKey: 'tagId' });
-//Tag.hasMany(ImageTags);
+//Tag.belongsToMany(Image, { through: ImageTags });
 
 Tag.sync({ force: false }).then(() => console.log("Tag model synced"));

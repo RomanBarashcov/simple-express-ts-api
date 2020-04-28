@@ -142,6 +142,200 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Get All Images",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{simple-ts}}/api/images/all",
+					"host": [
+						"{{simple-ts}}"
+					],
+					"path": [
+						"api",
+						"images",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Image By Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{simple-ts}}/api/images/3",
+					"host": [
+						"{{simple-ts}}"
+					],
+					"path": [
+						"api",
+						"images",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Image By Title",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{simple-ts}}/api/images/find/by/title/my favorite car",
+					"host": [
+						"{{simple-ts}}"
+					],
+					"path": [
+						"api",
+						"images",
+						"find",
+						"by",
+						"title",
+						"my favorite car"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Images Include Tags",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"tagIds\": [1,2]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{simple-ts}}/api/images/include/tags",
+					"host": [
+						"{{simple-ts}}"
+					],
+					"path": [
+						"api",
+						"images",
+						"include",
+						"tags"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Image",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"image\": {\n\t\t\"source\": \"http://bucket/images/porsche.718.jpg\",\n        \"title\": \"Porche 718\",\n        \"description\": \"#cars#life\"\n\t}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{simple-ts}}/api/images/add",
+					"host": [
+						"{{simple-ts}}"
+					],
+					"path": [
+						"api",
+						"images",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Image",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"image\": {\n\t\t\"id\": 1,\n\t\t\"source\": \"http://bucket/images/sea.jpg\",\n        \"title\": \"black sea\",\n        \"description\": \"#nature#life\"\n\t}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{simple-ts}}/api/images/update",
+					"host": [
+						"{{simple-ts}}"
+					],
+					"path": [
+						"api",
+						"images",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Assign Tag To Image",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"tagId\": 3,\n\t\"imageId\": 3\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{simple-ts}}/api/images/assign/tag",
+					"host": [
+						"{{simple-ts}}"
+					],
+					"path": [
+						"api",
+						"images",
+						"assign",
+						"tag"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Image",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{simple-ts}}/api/images/delete/1",
+					"host": [
+						"{{simple-ts}}"
+					],
+					"path": [
+						"api",
+						"images",
+						"delete",
+						"1"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"protocolProfileBehavior": {}

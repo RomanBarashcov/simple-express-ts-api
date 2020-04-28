@@ -5,7 +5,7 @@ export interface IImageService {
     findOneById: (id: number) => Promise<IImage | null>;
     findAll: () => Promise<IImage[]>;
     findAllByTitle: (title: string) => Promise<IImage[] | []>;
-    findAllByTags: (ids: [number]) => Promise<IImage[] | []>;
+    findAllIncludeTags: (ids: [number]) => Promise<IImage[] | []>;
     create: (image: IImage) => Promise<IImage>;
     assignTag: (imageId: number, tagId: number) => Promise<any>;
     update: (image: IImage) => Promise<any>;
@@ -53,10 +53,10 @@ export class ImageService implements IImageService {
         }
     }
 
-    public async findAllByTags (ids: [number]): Promise<IImage[] | []> {
+    public async findAllIncludeTags (ids: [number]): Promise<IImage[] | []> {
         try {
 
-            let images = await this.imageDao.getAllByTags(ids);
+            let images = await this.imageDao.getAllIncludeTags(ids);
             return images;
 
         } catch (err) {
@@ -77,6 +77,12 @@ export class ImageService implements IImageService {
 
     public async assignTag (imageId: number, tagId: number): Promise<any> {
         try {
+
+            let existTag = await this.imageDao.getOneTagById(tagId);
+            if(!existTag) throw 'Incorrect tag id';
+
+            let imageTags = await this.imageDao.getAllTagsByImage(imageId) as [];
+            if(imageTags.find(t => t === tagId)) throw 'Tag assignet';
 
             let result = await this.imageDao.assignTag(imageId, tagId);
             return result;
@@ -100,7 +106,7 @@ export class ImageService implements IImageService {
     public async delete (id: number): Promise<any> {
         try {
 
-            await this.imageDao.delete(id);
+           return await this.imageDao.delete(id);
 
         } catch (err) {
             throw err;

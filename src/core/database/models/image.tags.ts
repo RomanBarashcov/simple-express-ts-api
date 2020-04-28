@@ -24,7 +24,7 @@ ImageTags.init({
     },
 
     references: {
-      model: 'image',
+      model: Image,
       key: 'id',
     }
   },
@@ -37,7 +37,7 @@ ImageTags.init({
     },
 
     references: {
-      model: 'tag',
+      model: Tag,
       key: 'id',
     }
   },
@@ -45,8 +45,5 @@ ImageTags.init({
   sequelize,
   modelName: 'image_tags',
 });
-
-ImageTags.belongsTo(Image);
-ImageTags.belongsTo(Tag);
 
 ImageTags.sync({ force: false }).then(() => console.log("ImageTags model synced"));

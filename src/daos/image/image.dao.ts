@@ -5,7 +5,9 @@ export interface IImageDao {
     getOneById: (id: number) => Promise<IImage | null>;
     getAll: () => Promise<IImage[]>;
     getAllByTitle: (title: string) => Promise<IImage[] | []>;
-    getAllByTags: (ids: [number]) => Promise<IImage[] | []>;
+    getAllIncludeTags: (ids: [number]) => Promise<IImage[] | []>;
+    getOneTagById: (id: number) => Promise<any>;
+    getAllTagsByImage: (id: number) => Promise<any>;
     add: (image: IImage) => Promise<IImage>;
     assignTag: (imageId: number, tagId: number) => Promise<any>;
     update: (image: IImage) => Promise<any>;
@@ -20,7 +22,19 @@ class ImageDao implements IImageDao {
      */
     public async getOneById (id: number): Promise<IImage | null> {
 
-        const image = await db.Image.findOne({ where: { id: id } });
+        const image = await db.Image.findOne({
+            attributes: ['id', 'source', 'title', 'description'],
+            include: [{ 
+                model: db.Tag, 
+                attributes: ['id', 'name'],
+                required: false,
+                through: {
+                    attributes: [] // exclude all attributes in ImageTags through table
+                }
+            }],
+            where: { id: id } 
+        });
+        
         return image;
     }
 
@@ -52,16 +66,56 @@ class ImageDao implements IImageDao {
      *
      *@param ids
      */
-    public async getAllByTags (ids: [number]): Promise<IImage[] | []> {
+    public async getAllIncludeTags (ids: [number]): Promise<IImage[] | []> {
+
+        let imageIds = await db.ImageTags.findAll({
+            attributes: ['imageId'],
+            where: { tagId: ids }
+        });
 
         const images = await db.Image.findAll({
             include: [ { 
-                model: db.ImageTags,
-                where: {id: ids}
-            }]
+                model: db.Tag,
+                attributes: ['id', 'name'],
+                required: true,
+                through: {
+                    attributes: [], // exclude all attributes in ImageTags through table
+                },
+            }],
+            where: { id: imageIds.map(i => i.imageId) }
         });
 
         return images;
+
+    }
+
+    /**
+     *
+     *@param id
+     */
+    public async getAllTagsByImage (id: number): Promise<any> {
+        try {
+
+            let imageTagIds = await db.ImageTags.findAll({
+                attributes: ['tagId'],
+                where: { imageId: id }
+            });
+
+            return imageTagIds.map(i => i.tagId);
+
+        } catch (err) {
+            throw err;
+        }
+    }
+
+    /**
+     *
+     *@param id
+     */
+    public async getOneTagById (id: number): Promise<any> {
+
+        const image = await db.Tag.findOne({where: {id: id}});
+        return image;
 
     }
 

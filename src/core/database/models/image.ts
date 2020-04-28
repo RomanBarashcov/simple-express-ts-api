@@ -36,7 +36,6 @@ Image.init({
   modelName: 'images',
 });
 
-//Image.belongsToMany(Tag, { through: ImageTags });
-//Image.hasMany(ImageTags);
+Image.belongsToMany(Tag, { through: ImageTags });
 
 Image.sync({ force: false }).then(() => console.log("Image model synced"));
