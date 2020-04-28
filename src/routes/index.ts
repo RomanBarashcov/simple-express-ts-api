@@ -1,13 +1,33 @@
 import { Router } from 'express';
-import UserRouter from './users';
+import { UserRouter } from './users';
 import ImageRouter from './images';
 
-// Init router and path
-const router = Router();
+import UserDao from '@daos/user/user.dao';
+import { IUserService , UserService } from '../service/user.service';
+import { UserController, IUserController } from '../controllers/user.controller';
 
-// Add sub-routes
-router.use('/users', UserRouter);
-router.use('/images', ImageRouter);
+class RouterConfig {
 
-// Export the base-router
-export default router;
+    public router: Router;
+    private userRouter: Router;
+
+    constructor() {
+
+        this.router = Router();
+
+        const userDao = new UserDao();
+        const userService: IUserService = new UserService(userDao); 
+        const userController: IUserController = new UserController(userService);
+        this.userRouter = new UserRouter(userController).getRouter();
+
+        this.setupRouter();
+
+    }
+
+    private setupRouter(): void {
+        this.router.use('/users', this.userRouter);
+        this.router.use('/images', ImageRouter);
+    }
+}
+
+export default new RouterConfig().router;

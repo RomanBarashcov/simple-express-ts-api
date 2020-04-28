@@ -9,33 +9,51 @@ import 'express-async-errors';
 import BaseRouter from './routes';
 import logger from '@shared/logger';
 
-const app = express();
+class App {
 
-app.use(express.json());
-app.use(express.urlencoded({extended: true}));
-app.use(cookieParser());
+    public express: any;
 
-// Show routes called in console during development
-if (process.env.NODE_ENV === 'development') {
-    app.use(morgan('dev'));
+    constructor() {
+
+        this.express = express();
+        this.baseSetup();
+        this.setupRoute();
+        this.setupLogger();
+
+    }
+
+    public baseSetup(): void {
+
+        this.express.use(express.json());
+        this.express.use(express.urlencoded({extended: true}));
+        this.express.use(cookieParser());
+
+        // Show routes called in console during development
+        if (process.env.NODE_ENV === 'development') {
+            this.express.use(morgan('dev'));
+        }
+
+        // Security
+        if (process.env.NODE_ENV === 'production') {
+            this.express.use(helmet());
+        }
+    }
+
+    public setupRoute(): void {
+        this.express.use('/api', BaseRouter);
+    }
+
+    public setupLogger(): void {
+
+        this.express.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+            logger.error(err.message, err);
+            return res.status(BAD_REQUEST).json({
+                error: err.message,
+            });
+        });
+
+    }
 }
-
-// Security
-if (process.env.NODE_ENV === 'production') {
-    app.use(helmet());
-}
-
-// Add APIs
-app.use('/api', BaseRouter);
-
-// Print API errors
-app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-    logger.error(err.message, err);
-    return res.status(BAD_REQUEST).json({
-        error: err.message,
-    });
-});
-
 
 // Export express instance
-export default app;
+export default new App().express;

@@ -1,114 +1,41 @@
-import { Request, Response, Router } from 'express';
-import { BAD_REQUEST, CREATED, OK } from 'http-status-codes';
-import { ParamsDictionary } from 'express-serve-static-core';
+import { Router } from 'express';
+import { IUserController } from '../controllers/user.controller';
 
-import UserDao from '@daos/user/user.dao';
-import { paramMissingError } from '@shared/constants';
-import { IUserService , UserService } from '../service/user.service';
+export class UserRouter {
 
-const router = Router();
-const userDao = new UserDao();
-const userService: IUserService = new UserService(userDao); 
+    private router: Router;
+    private userController: IUserController;
 
-router.get('/all', async (req: Request, res: Response) => {
-    try {
+    constructor(private _uCon: IUserController) {
 
-        const users = await userService.getAll();
-        return res.status(OK).json({users});
+        this.router = Router();
+        this.userController = this._uCon;
+        this.setup();
 
-    } catch (err) {
-        return res.status(BAD_REQUEST).json({err});
     }
-});
 
-router.get('/:id', async (req: Request, res: Response) => {
-    try {
+    private setup(): void {
 
-        const { id } = req.params as ParamsDictionary;
-        const user = await userService.getById(Number(id));
-        return res.status(OK).json({user});
+        this.router.route('/all').get(this.userController.getAllUsers);
 
-    } catch (err) {
-        return res.status(BAD_REQUEST).json({err});
+        /*this.router.get('/:id', this.userController.getById);
+
+        this.router.get('/find/by/email/:email', this.userController.getByEmail);
+
+        this.router.get('/find/by/role/:id', this.userController.getByRole);
+
+        this.router.post('/add', this.userController.create);
+
+        this.router.put('/update', this.userController.update);
+
+        this.router.delete('/delete/:id', this.userController.delete); */
+
     }
-});
 
-router.get('/find/by/email/:email', async (req: Request, res: Response) => {
-    try {
+    public getRouter(): Router {
 
-        const { email } = req.params as ParamsDictionary;
-        const users = await userService.getByEmail(email);
-        return res.status(OK).json({users});
+        return this.router;
 
-    } catch (err) {
-        return res.status(BAD_REQUEST).json({err});
     }
-});
 
-router.get('/find/by/role/:id', async (req: Request, res: Response) => {
-    try {
-
-        const { id } = req.params as ParamsDictionary;
-        const users = await userService.getByRoleId(Number(id));
-        return res.status(OK).json({users});
-
-    } catch (err) {
-        return res.status(BAD_REQUEST).json({err});
-    }
-});
-
-
-router.post('/add', async (req: Request, res: Response) => {
-    try {
-
-        const { user } = req.body;
-
-        if (!user) {
-            return res.status(BAD_REQUEST).json({
-                error: paramMissingError,
-            });
-        }
-    
-        let result = await userService.createUser(user);
-        return res.status(CREATED).json({user: result});
-
-    } catch (err) {
-        return res.status(BAD_REQUEST).json({err});
-    }
-});
-
-
-router.put('/update', async (req: Request, res: Response) => {
-    try {
-
-        const { user } = req.body;
-        if (!user) {
-            return res.status(BAD_REQUEST).json({
-                error: paramMissingError,
-            });
-        }
-    
-        user.id = Number(user.id);
-        let result = await userService.updateUser(user);
-    
-        return res.status(OK).json({user: result});
-
-    } catch (err) {
-        return res.status(BAD_REQUEST).json({err});
-    }
-});
-
-
-router.delete('/delete/:id', async (req: Request, res: Response) => {
-    try {
-
-        const { id } = req.params as ParamsDictionary;
-        await userDao.delete(Number(id));
-        return res.status(OK).end();
-
-    } catch (err) {
-        return res.status(BAD_REQUEST).json({err});
-    }
-});
-
-export default router;
+}

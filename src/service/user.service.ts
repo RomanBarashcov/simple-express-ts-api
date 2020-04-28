@@ -1,13 +1,21 @@
 import { IUserDao } from '../daos/user/user.dao';
 
 export interface IUserService {
+
     getAll(): Promise<any>;
+
     getById(id: number): Promise<any>;
+
     getByRoleId(id: number): Promise<any>;
+
     getByEmail(email: string): Promise<any>;
+
     createUser(user: any): Promise<any>;
+
     updateUser(user: any): Promise<any>;
+
     deleteUser(id: number): Promise<any>;
+    
 }
 
 export class UserService implements IUserService {
