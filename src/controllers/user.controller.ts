@@ -54,18 +54,6 @@ export class UserController implements IUserController {
         }
     }
 
-    /*public async findByTitle(req: Request, res: Response): Promise<any> {
-        try {
-
-            const { title } = req.params as ParamsDictionary;
-            const images = await this.imageService.findAllByTitle(title);
-            return res.status(OK).json({images});
-    
-        } catch (err) {
-            return res.status(BAD_REQUEST).json({err});
-        }
-    } */
-
     public async getByEmail (req: Request, res: Response): Promise<any> {
         try {
     

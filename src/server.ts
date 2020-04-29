@@ -6,7 +6,8 @@ import express, { Request, Response, NextFunction } from 'express';
 import { BAD_REQUEST } from 'http-status-codes';
 import 'express-async-errors';
 
-import BaseRouter from './routes';
+import UserRouter from './routes/users';
+import ImageRouter from './routes/images';
 import logger from '@shared/logger';
 
 class App {
@@ -16,8 +17,9 @@ class App {
     constructor() {
 
         this.express = express();
+        
         this.baseSetup();
-        this.setupRoute();
+        this.setupRoutes();
         this.setupLogger();
 
     }
@@ -39,8 +41,9 @@ class App {
         }
     }
 
-    public setupRoute(): void {
-        this.express.use('/api', BaseRouter);
+    public setupRoutes(): void {
+        this.express.use('/api/users', UserRouter);
+        this.express.use('/api/images', ImageRouter);
     }
 
     public setupLogger(): void {

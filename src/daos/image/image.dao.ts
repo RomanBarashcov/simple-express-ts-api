@@ -2,16 +2,27 @@ import { IImage } from '@entities/Image';
 import { db } from '../../core/database/config/index';
 
 export interface IImageDao {
+
     getOneById: (id: number) => Promise<IImage | null>;
+
     getAll: () => Promise<IImage[]>;
+
     getAllByTitle: (title: string) => Promise<IImage[] | []>;
+
     getAllIncludeTags: (ids: [number]) => Promise<IImage[] | []>;
+
     getOneTagById: (id: number) => Promise<any>;
+
     getAllTagsByImage: (id: number) => Promise<any>;
+
     add: (image: IImage) => Promise<IImage>;
+
     assignTag: (imageId: number, tagId: number) => Promise<any>;
+
     update: (image: IImage) => Promise<any>;
+
     delete: (id: number) => Promise<void>;
+    
 }
 
 class ImageDao implements IImageDao {

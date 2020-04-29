@@ -2,13 +2,21 @@ import { IUser } from '@entities/User';
 import { db } from '../../core/database/config/index';
 
 export interface IUserDao {
+
     getOneByEmail: (email: string) => Promise<IUser | null>;
+
     getOneById: (id: number) => Promise<IUser | null>;
+
     getAll: () => Promise<IUser[]>;
+
     getAllByRoleId: (id: number) => Promise<IUser[]>;
+
     add: (user: IUser) => Promise<IUser>;
+
     update: (user: IUser) => Promise<any>;
+
     delete: (id: number) => Promise<void>;
+    
 }
 
 class UserDao implements IUserDao {

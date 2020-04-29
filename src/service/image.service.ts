@@ -2,14 +2,23 @@ import { IImageDao } from '../daos/image/image.dao';
 import { IImage } from '../entities/Image';
 
 export interface IImageService {
+
     findOneById: (id: number) => Promise<IImage | null>;
+
     findAll: () => Promise<IImage[]>;
+
     findAllByTitle: (title: string) => Promise<IImage[] | []>;
+
     findAllIncludeTags: (ids: [number]) => Promise<IImage[] | []>;
+
     create: (image: IImage) => Promise<IImage>;
+
     assignTag: (imageId: number, tagId: number) => Promise<any>;
+
     update: (image: IImage) => Promise<any>;
+
     delete: (id: number) => Promise<any>;
+    
 }
 
 export class ImageService implements IImageService {
